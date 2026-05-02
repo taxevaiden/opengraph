@@ -21,7 +21,7 @@ pub struct Object {
 }
 
 impl Object {
-    pub fn new<'a>(props: &'a Vec<(String, String)>) -> Object {
+    pub fn new(props: &[(String, String)]) -> Object {
         let mut obj = Object::default();
         for prop in props.iter() {
             let key: &str = &(prop.0);
@@ -73,7 +73,7 @@ impl Object {
     }
 }
 
-#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq, Default)]
 pub enum ObjectType {
     // No Vetical
     #[serde(rename = "article")]
@@ -83,6 +83,7 @@ pub enum ObjectType {
     #[serde(rename = "profile")]
     Profile,
     #[serde(rename = "website")]
+    #[default]
     Website,
     // Music
     #[serde(rename = "music.song")]
@@ -124,13 +125,7 @@ impl ObjectType {
     }
 }
 
-impl Default for ObjectType {
-    fn default() -> ObjectType {
-        ObjectType::Website
-    }
-}
-
-#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq, Default)]
 pub enum Determiner {
     #[serde(rename = "a")]
     A,
@@ -139,6 +134,7 @@ pub enum Determiner {
     #[serde(rename = "the")]
     The,
     #[serde(rename = "")]
+    #[default]
     Blank,
     #[serde(rename = "auto")]
     Auto,
@@ -153,11 +149,5 @@ impl Determiner {
             "auto" => Determiner::Auto,
             _ => Determiner::Blank,
         }
-    }
-}
-
-impl Default for Determiner {
-    fn default() -> Determiner {
-        Determiner::Blank
     }
 }

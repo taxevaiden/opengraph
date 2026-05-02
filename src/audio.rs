@@ -9,7 +9,7 @@ pub struct Audio {
 impl Audio {
     pub fn new(url: String) -> Audio {
         Audio {
-            url: url,
+            url,
             secure_url: None,
             obj_type: None,
         }

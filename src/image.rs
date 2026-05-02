@@ -14,7 +14,7 @@ pub struct Image {
 impl Image {
     pub fn new(url: String) -> Image {
         Image {
-            url: url,
+            url,
             secure_url: None,
             obj_type: None,
             width: None,
@@ -23,13 +23,10 @@ impl Image {
     }
     pub fn normalize(&mut self, url: &Url) -> &mut Image {
         if let Err(e) = Url::parse(&self.url) {
-            match e {
-                ParseError::RelativeUrlWithoutBase => {
-                    if let Ok(url) = url.join(&self.url) {
-                        self.url = url.to_string();
-                    }
-                }
-                _ => (),
+            if e == ParseError::RelativeUrlWithoutBase
+                && let Ok(url) = url.join(&self.url)
+            {
+                self.url = url.to_string();
             }
             println!("{:?}", e);
         }

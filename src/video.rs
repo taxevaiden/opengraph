@@ -11,7 +11,7 @@ pub struct Video {
 impl Video {
     pub fn new(url: String) -> Video {
         Video {
-            url: url,
+            url,
             secure_url: None,
             obj_type: None,
             width: None,
