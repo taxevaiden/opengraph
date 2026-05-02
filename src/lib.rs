@@ -1,6 +1,5 @@
 #[macro_use]
 extern crate serde_derive;
-extern crate html5ever;
 extern crate serde;
 extern crate serde_json;
 extern crate url;
