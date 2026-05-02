@@ -7,20 +7,11 @@ use std::io::Read;
 
 use scraper::{Html, Selector};
 
+#[derive(Default)]
 pub struct Opts {
     pub include_images: bool,
     pub include_audios: bool,
     pub include_videos: bool,
-}
-
-impl Default for Opts {
-    fn default() -> Opts {
-        Opts {
-            include_images: false,
-            include_videos: false,
-            include_audios: false,
-        }
-    }
 }
 
 pub fn extract<R>(input: &mut R, option: Opts) -> Result<Object, Error>
