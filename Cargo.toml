@@ -1,15 +1,16 @@
 [package]
 name = "opengraph"
+edition = "2024"
 version = "0.2.5"
-authors = ["Jagan Veeraraghavan <iam@jagan.id>"]
+authors = ["taxevaiden <taxevaiden@gmail.com>"]
 include = [
     "**/*.rs",
     "Cargo.toml",
 ]
 license = "MIT"
-homepage = "https://github.com/iamjagan/opengraph"
-repository = "https://github.com/iamjagan/opengraph.git"
-description = "Parses html and extracts Open Graph protocol markup. Fork of https://github.com/kumabook/opengraph"
+homepage = "https://github.com/taxevaiden/opengraph"
+repository = "https://github.com/taxevaiden/opengraph.git"
+description = "Parses html and extracts Open Graph protocol markup. Fork of https://github.com/iamjagan/opengraph"
 keywords = ["opengraph"]
 categories = []
 
@@ -17,11 +18,5 @@ categories = []
 serde            = "^1"
 serde_derive     = "^1"
 serde_json       = "^1"
-html5ever        = "^0.22"
-
-[dependencies.reqwest]
-version = "^0.9"
-optional = true
-
-[features]
-default = ["reqwest"]
+html5ever        = "^0.39"
+url = "2.5.8"

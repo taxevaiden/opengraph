@@ -5,6 +5,8 @@ opengraph
 
 opengraph is a library that parses html and extracts Open Graph protocol markup.
 
+Used for [twtGUI](https://github.com/taxevaiden/twtGUI). The scraping functionality from the original has been removed.
+
 
 Usage
 -----
@@ -17,24 +19,7 @@ Usage
 opengraph = "^0"
 ```
 
-- Then, use `opengraph::scrape` as below:
-
-```rust
-
-extern crate opengraph;
-
-fn main() {
-  match opengraph::scrape("https://spincoaster.com/chromeo-juice", Default::default()) {
-      Ok(object) => {
-          println!("{:?}", object);
-      },
-      Err(_) => println!("error occured"),
-  }
-}
-
-```
-
-or use `opengraph::extract` as below:
+- Then, use `opengraph::extract` as below:
 
 ```rust
 extern crate opengraph;

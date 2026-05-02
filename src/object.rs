@@ -1,23 +1,23 @@
-use video::Video;
-use image::Image;
-use audio::Audio;
+use crate::audio::Audio;
+use crate::image::Image;
+use crate::video::Video;
 
 #[derive(Serialize, Deserialize, Debug, Default, Clone)]
 pub struct Object {
     #[serde(rename = "type")]
-    pub obj_type:         ObjectType,
-    pub title:            String,
-    pub url:              String,
+    pub obj_type: ObjectType,
+    pub title: String,
+    pub url: String,
 
-    pub images:           Vec<Image>,
-    pub audios:           Vec<Audio>,
-    pub videos:           Vec<Video>,
+    pub images: Vec<Image>,
+    pub audios: Vec<Audio>,
+    pub videos: Vec<Video>,
 
-    pub description:      Option<String>,
-    pub determiner:       Option<Determiner>,
-    pub locale:           Option<String>,
+    pub description: Option<String>,
+    pub determiner: Option<Determiner>,
+    pub locale: Option<String>,
     pub locale_alternate: Vec<String>,
-    pub site_name:        Option<String>,
+    pub site_name: Option<String>,
 }
 
 impl Object {
@@ -25,36 +25,48 @@ impl Object {
         let mut obj = Object::default();
         for prop in props.iter() {
             let key: &str = &(prop.0);
-            let v         = prop.1.clone();
+            let v = prop.1.clone();
             match key {
-                "title"       => { obj.title       = v; },
-                "type"        => { obj.obj_type    = ObjectType::new(v); },
-                "url"         => { obj.url         = v; },
-                "description" => { obj.description = Some(v); },
-                "determiner"  => { obj.determiner  = Some(Determiner::new(v)); },
-                "locale"      => { obj.locale      = Some(v); },
-                "site_name"   => { obj.site_name   = Some(v); },
+                "title" => {
+                    obj.title = v;
+                }
+                "type" => {
+                    obj.obj_type = ObjectType::new(v);
+                }
+                "url" => {
+                    obj.url = v;
+                }
+                "description" => {
+                    obj.description = Some(v);
+                }
+                "determiner" => {
+                    obj.determiner = Some(Determiner::new(v));
+                }
+                "locale" => {
+                    obj.locale = Some(v);
+                }
+                "site_name" => {
+                    obj.site_name = Some(v);
+                }
 
-                "image"            => { obj.images.push(Image::new(v)); },
-                "video"            => { obj.videos.push(Video::new(v)); },
-                "audio"            => { obj.audios.push(Audio::new(v)); },
-                "locale:alternate" => {
-                    obj.locale_alternate.push(v)
-                },
-                v if v.starts_with("image") => {
-                },
-                v if v.starts_with("music") => {
-                },
+                "image" => {
+                    obj.images.push(Image::new(v));
+                }
+                "video" => {
+                    obj.videos.push(Video::new(v));
+                }
+                "audio" => {
+                    obj.audios.push(Audio::new(v));
+                }
+                "locale:alternate" => obj.locale_alternate.push(v),
+                v if v.starts_with("image") => {}
+                v if v.starts_with("music") => {}
 
-                v if v.starts_with("video") => {
-                },
-                v if v.starts_with("article") => {
-                },
-                v if v.starts_with("book") => {
-                },
-                v if v.starts_with("profile") => {
-                },
-                _ => {},
+                v if v.starts_with("video") => {}
+                v if v.starts_with("article") => {}
+                v if v.starts_with("book") => {}
+                v if v.starts_with("profile") => {}
+                _ => {}
             }
         }
         obj
@@ -95,25 +107,27 @@ pub enum ObjectType {
 impl ObjectType {
     pub fn new(str: String) -> ObjectType {
         match str.as_ref() {
-            "article"             => ObjectType::Article,
-            "book"                => ObjectType::Book,
-            "profile"             => ObjectType::Profile,
-            "website"             => ObjectType::Website,
-            "music.song"          => ObjectType::Song,
-            "music.album"         => ObjectType::Album,
-            "music.playlist"      => ObjectType::Playlist,
+            "article" => ObjectType::Article,
+            "book" => ObjectType::Book,
+            "profile" => ObjectType::Profile,
+            "website" => ObjectType::Website,
+            "music.song" => ObjectType::Song,
+            "music.album" => ObjectType::Album,
+            "music.playlist" => ObjectType::Playlist,
             "music.radio_station" => ObjectType::RadioStation,
-            "video.movie"         => ObjectType::Movie,
-            "video.episode"       => ObjectType::Episode,
-            "video.tv_show"       => ObjectType::TVShow,
-            "video.other"         => ObjectType::VideoOther,
-            _                     => ObjectType::Website,
+            "video.movie" => ObjectType::Movie,
+            "video.episode" => ObjectType::Episode,
+            "video.tv_show" => ObjectType::TVShow,
+            "video.other" => ObjectType::VideoOther,
+            _ => ObjectType::Website,
         }
     }
 }
 
 impl Default for ObjectType {
-    fn default() -> ObjectType  { ObjectType::Website }
+    fn default() -> ObjectType {
+        ObjectType::Website
+    }
 }
 
 #[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
@@ -133,15 +147,17 @@ pub enum Determiner {
 impl Determiner {
     pub fn new(str: String) -> Determiner {
         match str.as_ref() {
-            "a"     => Determiner::A,
-            "an"    => Determiner::An,
-            "the"   => Determiner::The,
-            "auto"  => Determiner::Auto,
-            _       => Determiner::Blank,
+            "a" => Determiner::A,
+            "an" => Determiner::An,
+            "the" => Determiner::The,
+            "auto" => Determiner::Auto,
+            _ => Determiner::Blank,
         }
     }
 }
 
 impl Default for Determiner {
-    fn default() -> Determiner  { Determiner::Blank }
+    fn default() -> Determiner {
+        Determiner::Blank
+    }
 }
